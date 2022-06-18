@@ -1,91 +1,110 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 import marcas from "../constants/marcas";
 import years from "../constants/years";
 import plans from "../constants/plans";
+import Errror from "../components/Errror";
 
-import useCotizador from '../hooks/useCotizador';
+import useCotizador from "../hooks/useCotizador";
 
 const Formulario = () => {
+  const { 
+    handleChangeData, 
+    datos, 
+    setError, 
+    error, 
+    cotizarSeguro,
+    resultado } = useCotizador();
 
-  /* const {modal, setModal} = useCotizador();
-
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    setModal(!modal);
-    console.log(modal);
-  } */
+    if (Object.values(datos).includes("")) {
+      setError("Todos los campos obligatorios");
+      return;
+    }
+    cotizarSeguro();
+    
+    setError('')
+  };
 
   return (
-    <form>
-      <div className="my-5">
-        <label
-          className="block mb-3 font-bold
+    <>
+      {error && <Errror />}
+      <form onSubmit={handleSubmit}>
+        <div className="my-5">
+          <label
+            className="block mb-3 font-bold
             text-gray-400 uppercase"
-        >
-          Marca
-        </label>
-        <select
-          className="w-full p-3 bg-white border border-gray-200
+          >
+            Marca
+          </label>
+          <select
+            name="marca"
+            className="w-full p-3 bg-white border border-gray-200
             rounded-md"
-        >
-          <option value="">--Seleccione marca--</option>
-          {marcas.map((marca) => (
-            <option 
-                key={marca} 
-                value={marca}
-                onSelect={() => (console.log('asd'))}
-            >
-              {marca}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="my-5">
-        <label
-          className="block mb-3 font-bold
+            onChange={(e) => handleChangeData(e)}
+            value={datos.marca}
+          >
+            <option value="">--Seleccione marca--</option>
+            {marcas.map((marca) => (
+              <option key={marca} value={marca}>
+                {marca}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="my-5">
+          <label
+            className="block mb-3 font-bold
             text-gray-400 uppercase"
-        >
-          Año
-        </label>
-        <select
-          className="w-full p-3 bg-white border border-gray-200
+          >
+            Año
+          </label>
+          <select
+            name="year"
+            className="w-full p-3 bg-white border border-gray-200
             rounded-md"
-        >
-          <option value="">--Seleccione Modelo--</option>
-          {years.map((year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="my-5">
-        <label
-          className="block mb-3 font-bold
+            onChange={(e) => handleChangeData(e)}
+            value={datos.year}
+          >
+            <option value="">--Seleccione Modelo--</option>
+            {years.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="my-5">
+          <label
+            className="block mb-3 font-bold
             text-gray-400 uppercase"
-        >
-          Plan
-        </label>
-        <select
-          className="w-full p-3 bg-white border border-gray-200
+          >
+            Plan
+          </label>
+          <select
+            name="plan"
+            className="w-full p-3 bg-white border border-gray-200
             rounded-md"
-        >
-          <option value="">--Seleccione Plan--</option>
-          {plans.map((plan) => (
-            <option key={plan} value={plan}>
-              {plan}
-            </option>
-          ))}
-        </select>
-      </div>
-      <input
-        type="submit"
-        className="w-full  bg-indigo-600 hover:bg-blue-500 transition-colors
+            onChange={(e) => handleChangeData(e)}
+            value={datos.plan}
+          >
+            <option value="">--Seleccione Plan--</option>
+            {plans.map((plan) => (
+              <option key={plan} value={plan}>
+                {plan}
+              </option>
+            ))}
+          </select>
+        </div>
+        <input
+          type="submit"
+          className="w-full  bg-indigo-600 hover:bg-blue-500 transition-colors
             text-white cursor-pointer p-3 uppercase font-bold rounded-md"
-        value="cotizar"
-      />
-    </form>
+          value="cotizar"
+        />
+      </form>
+    </>
   );
 };
 
