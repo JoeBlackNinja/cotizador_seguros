@@ -1,20 +1,23 @@
+import { useState } from 'react';
+
 import marcas from "../constants/marcas";
 import years from "../constants/years";
 import plans from "../constants/plans";
 
-import { useState } from 'react';
+import useCotizador from '../hooks/useCotizador';
 
 const Formulario = () => {
 
-  const [marca,setMarca] = useState();
+  /* const {modal, setModal} = useCotizador();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(marca);
-  }
+    setModal(!modal);
+    console.log(modal);
+  } */
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <div className="my-5">
         <label
           className="block mb-3 font-bold
