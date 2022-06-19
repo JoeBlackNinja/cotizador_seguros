@@ -3,12 +3,12 @@ import useCotizador from '../hooks/useCotizador';
 
 import Spinner from '../components/Spinner';
 import Resultado from './Resultado';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const AppSeguro = (props) => {
 
-  const {resultado, cargando} = useCotizador();
-  
+  const {cargando, firstTime } = useCotizador();
+
   return (
     <>
         <header className="my-10">
@@ -19,7 +19,7 @@ const AppSeguro = (props) => {
         rounded-lg p-10">
             <Formulario/>
         </main>
-        {cargando ? <Spinner/> : <Resultado/>}
+        {cargando ? <Spinner/> : firstTime && <Resultado/>}
     </>
   )
 }
