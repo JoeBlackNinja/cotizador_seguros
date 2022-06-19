@@ -1,6 +1,14 @@
 import Formulario from './Formulario';
+import useCotizador from '../hooks/useCotizador';
 
-const AppSeguro = () => {
+import Spinner from '../components/Spinner';
+import Resultado from './Resultado';
+import { useEffect, useState } from 'react';
+
+const AppSeguro = (props) => {
+
+  const {resultado, cargando} = useCotizador();
+  
   return (
     <>
         <header className="my-10">
@@ -11,6 +19,7 @@ const AppSeguro = () => {
         rounded-lg p-10">
             <Formulario/>
         </main>
+        {cargando ? <Spinner/> : <Resultado/>}
     </>
   )
 }
